@@ -1,0 +1,45 @@
+version: "2"
+networks:
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge
+services:
+  app:
+    container_name: app
+    restart: always
+    build: .
+    env_file: .env
+    ports:
+      - "8080:8080"
+    links:
+      - mongo
+      - redis 
+    networks:
+      - back-tier
+      - front-tier
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - back-tier    
+  redis:
+    container_name: redis
+    image: redis
+    volumes:
+      - ./data:/data/redis
+    ports:
+      - "6379:6379"
+    networks:
+      - back-tier
+  mongodata:
+    build: ./mongodata
+    links:
+      - mongo  
+    networks:
+      - back-tier   
+       
