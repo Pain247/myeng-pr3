@@ -4,7 +4,7 @@
   "description": "My English ",
   "main": "app.js",
   "scripts": {
-    "start": "docker-compose up"
+    "start": "node app"
   },
   "author": "tungdd",
   "license": "ISC",
